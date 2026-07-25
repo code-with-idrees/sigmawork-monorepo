@@ -1,0 +1,1 @@
+"""SigmaWork application package."""

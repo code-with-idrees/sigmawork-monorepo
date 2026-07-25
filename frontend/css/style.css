@@ -1,0 +1,546 @@
+/* ═══════════════════════════════════════════════════════════
+   SigmaWork — Auth Pages Stylesheet
+   Matches the provided UI mockups:
+     • Warm beige/cream background with green gradient blobs
+     • Centered card with rounded corners
+     • Lime-green accent for active tabs & primary buttons
+     • Dark secondary buttons
+     • Inter typeface
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Reset & Base ──────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Brand palette */
+  --lime:        #BFFF00;
+  --lime-hover:  #A8E600;
+  --lime-light:  #DEFF80;
+  --dark:        #1A1A1A;
+  --dark-hover:  #2D2D2D;
+  --text:        #1A1A1A;
+  --text-muted:  #6B6B6B;
+  --bg-page:     #F5F0E8;
+  --bg-card:     #FFFFFF;
+  --border:      #E0DCD4;
+  --border-focus:#BFFF00;
+  --error:       #E53935;
+  --success:     #43A047;
+  --input-bg:    #FAF8F5;
+
+  /* Sizing */
+  --card-width:  460px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   24px;
+  --radius-pill: 999px;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: var(--bg-page);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Background blobs ──────────────────────────────────── */
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(191,255,0,0.25) 0%, transparent 70%);
+  top: -120px;
+  right: -80px;
+  animation: blob-float 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(191,255,0,0.20) 0%, transparent 70%);
+  bottom: -100px;
+  left: -60px;
+  animation: blob-float 22s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes blob-float {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(30px, -20px) scale(1.05); }
+  100% { transform: translate(-15px, 15px) scale(0.97); }
+}
+
+/* ── Logo area ─────────────────────────────────────────── */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--dark);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.brand-icon::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--lime);
+  border-radius: 4px;
+}
+
+.brand-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* ── Card container ────────────────────────────────────── */
+
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: var(--card-width);
+  max-width: 92vw;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px 36px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  animation: card-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Tab toggle ────────────────────────────────────────── */
+
+.tab-toggle {
+  display: flex;
+  background: #F0ECE4;
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  margin-bottom: 28px;
+}
+
+.tab-toggle a,
+.tab-toggle button {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tab-toggle a.active,
+.tab-toggle button.active {
+  background: var(--lime);
+  color: var(--dark);
+  box-shadow: 0 2px 8px rgba(191, 255, 0, 0.3);
+}
+
+.tab-toggle a:hover:not(.active),
+.tab-toggle button:hover:not(.active) {
+  color: var(--text);
+}
+
+/* ── Headings ──────────────────────────────────────────── */
+
+.auth-card h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: -0.03em;
+}
+
+/* ── Form fields ───────────────────────────────────────── */
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 70px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.input-wrapper input::placeholder {
+  color: #B5B0A8;
+}
+
+.input-wrapper input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(191, 255, 0, 0.15);
+}
+
+.input-wrapper input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.10);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.toggle-password:hover {
+  color: var(--text);
+}
+
+/* ── Forgot password link ──────────────────────────────── */
+
+.forgot-link {
+  display: block;
+  text-align: right;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: var(--lime-hover);
+  text-decoration: underline;
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
+
+.btn {
+  width: 100%;
+  padding: 14px 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--dark);
+  color: var(--lime);
+}
+
+.btn-primary:hover {
+  background: var(--dark-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-primary.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.btn-primary.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2.5px solid var(--lime);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.btn-primary.loading span {
+  visibility: hidden;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Divider ───────────────────────────────────────────── */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 22px 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── OAuth buttons ─────────────────────────────────────── */
+
+.oauth-row {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-oauth {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.btn-oauth:hover {
+  background: var(--input-bg);
+  border-color: #C8C3BA;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn-oauth:active {
+  transform: translateY(0);
+}
+
+.btn-oauth svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ── Footer links ──────────────────────────────────────── */
+
+.auth-footer {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+  color: var(--lime-hover);
+  text-decoration: underline;
+}
+
+/* ── Error / success messages ──────────────────────────── */
+
+.message {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 18px;
+  display: none;
+  animation: msg-enter 0.3s ease both;
+}
+
+.message.show {
+  display: block;
+}
+
+.message.error {
+  background: #FFF5F5;
+  color: var(--error);
+  border: 1px solid #FFCDD2;
+}
+
+.message.success {
+  background: #F1F8E9;
+  color: var(--success);
+  border: 1px solid #C5E1A5;
+}
+
+@keyframes msg-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Field-level error ─────────────────────────────────── */
+
+.field-error {
+  font-size: 0.78rem;
+  color: var(--error);
+  margin-top: 4px;
+  display: none;
+}
+
+.field-error.show {
+  display: block;
+  animation: msg-enter 0.25s ease both;
+}
+
+/* ── Password strength indicator ───────────────────────── */
+
+.password-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.password-strength .bar {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.password-strength .bar.weak     { background: var(--error); }
+.password-strength .bar.medium   { background: #FFB300; }
+.password-strength .bar.strong   { background: var(--success); }
+
+.strength-label {
+  font-size: 0.72rem;
+  margin-top: 4px;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+
+@media (max-width: 520px) {
+  .auth-card {
+    padding: 28px 20px 24px;
+    border-radius: 20px;
+  }
+
+  .auth-card h1 {
+    font-size: 1.3rem;
+  }
+
+  .oauth-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  body::before,
+  body::after {
+    width: 300px;
+    height: 300px;
+  }
+}
